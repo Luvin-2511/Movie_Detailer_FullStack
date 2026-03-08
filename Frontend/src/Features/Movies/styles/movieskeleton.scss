@@ -1,0 +1,67 @@
+.movie-skeleton {
+  &__poster {
+    aspect-ratio: 2 / 3;
+    width: 100%;
+  }
+
+  &__info {
+    padding: 0.7rem 0 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  &__title {
+    height: 12px;
+    flex: 1;
+    border-radius: 2px;
+  }
+
+  &__year {
+    height: 12px;
+    width: 36px;
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+// Private route loading spinner
+.private-loading {
+  position: fixed;
+  inset: 0;
+  background: #060608;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(232, 255, 0, 0.15);
+    border-top-color: #e8ff00;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: block;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

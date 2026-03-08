@@ -1,0 +1,415 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400&display=swap");
+
+.cinema-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #040406;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  // ── CRT scanlines ──────────────────────────────────
+  &__scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.15) 2px,
+      rgba(0, 0, 0, 0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 10;
+    animation: scanlineFlicker 8s linear infinite;
+  }
+
+  // ── Grid cells for GSAP exit wipe ─────────────────
+  &__grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    z-index: 20;
+    pointer-events: none;
+
+    .loader-cell {
+      background: #040406;
+      transform-origin: top center;
+      transform: scaleY(0);
+    }
+  }
+
+  // ── Film strips ────────────────────────────────────
+  &__filmstrip {
+    position: absolute;
+    top: -100px;
+    bottom: -100px;
+    width: 72px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: filmScroll 1.2s linear infinite;
+
+    &--left  { left: 0; }
+    &--right { right: 0; animation-direction: reverse; }
+
+    .film-frame {
+      flex-shrink: 0;
+      width: 72px;
+      height: 96px;
+      border-top: 1px solid rgba(232, 255, 0, 0.07);
+      border-bottom: 1px solid rgba(232, 255, 0, 0.07);
+      position: relative;
+      background: rgba(0, 0, 0, 0.6);
+      display: grid;
+      grid-template-columns: 14px 1fr 14px;
+      grid-template-rows: 14px 1fr 14px;
+      gap: 0;
+    }
+
+    .film-hole {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #040406;
+      border: 1px solid rgba(232, 255, 0, 0.18);
+      align-self: center;
+      justify-self: center;
+    }
+
+    .film-hole--tl { grid-column: 1; grid-row: 1; }
+    .film-hole--tr { grid-column: 3; grid-row: 1; }
+    .film-hole--bl { grid-column: 1; grid-row: 3; }
+    .film-hole--br { grid-column: 3; grid-row: 3; }
+
+    .film-content {
+      grid-column: 2;
+      grid-row: 1 / 4;
+      background: rgba(232, 255, 0, 0.02);
+      animation: filmBright 2s ease-in-out infinite alternate;
+    }
+  }
+
+  // ── Center content ────────────────────────────────
+  &__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    z-index: 5;
+    width: min(480px, 80vw);
+  }
+
+  // ── Crosshair reticle ─────────────────────────────
+  &__crosshair {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: crosshairSpin 25s linear infinite;
+
+    .ch-h {
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background: rgba(232, 255, 0, 0.12);
+    }
+
+    .ch-v {
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      background: rgba(232, 255, 0, 0.12);
+    }
+
+    .ch-circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(232, 255, 0, 0.1);
+      width: 130px;
+      height: 130px;
+
+      &--2 {
+        width: 72px;
+        height: 72px;
+        border-color: rgba(232, 255, 0, 0.18);
+        animation: crosshairSpin 7s linear infinite reverse;
+      }
+    }
+
+    .ch-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #e8ff00;
+      box-shadow: 0 0 10px #e8ff00, 0 0 28px rgba(232, 255, 0, 0.6);
+      animation: dotPulse 1.5s ease-in-out infinite;
+    }
+
+    .ch-corner {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: rgba(232, 255, 0, 0.45);
+      border-style: solid;
+
+      &--tl { top: 0;    left: 0;  border-width: 2px 0 0 2px; }
+      &--tr { top: 0;    right: 0; border-width: 2px 2px 0 0; }
+      &--bl { bottom: 0; left: 0;  border-width: 0 0 2px 2px; }
+      &--br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+    }
+  }
+
+  // ── Logo ──────────────────────────────────────────
+  &__logo {
+    text-align: center;
+
+    .logo-eyebrow {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.45em;
+      color: rgba(232, 255, 0, 0.45);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      animation: textFlicker 5s ease-in-out infinite;
+    }
+
+    .logo-text {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(3.5rem, 8vw, 5.5rem);
+      letter-spacing: 0.25em;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .logo-sub {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: rgba(255, 255, 255, 0.18);
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+  }
+
+  // ── Progress ──────────────────────────────────────
+  &__progress {
+    width: 100%;
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.55rem;
+
+      .progress-label {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.58rem;
+        letter-spacing: 0.3em;
+        color: rgba(255, 255, 255, 0.22);
+        text-transform: uppercase;
+      }
+
+      .progress-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: 0.1em;
+        color: #e8ff00;
+      }
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.06);
+      position: relative;
+      margin-bottom: 0.75rem;
+
+      .progress-fill {
+        height: 100%;
+        background: #e8ff00;
+        transition: width 0.07s linear;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          right: -1px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          background: #fff;
+          box-shadow: 0 0 8px #e8ff00, 0 0 22px rgba(232, 255, 0, 0.9);
+        }
+      }
+
+      .progress-glow {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 10px;
+        background: radial-gradient(ellipse, rgba(232, 255, 0, 0.35) 0%, transparent 70%);
+        pointer-events: none;
+        transition: left 0.07s linear;
+      }
+    }
+
+    .progress-segments {
+      display: flex;
+      gap: 3px;
+
+      .seg {
+        flex: 1;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.05);
+        transition: background 0.12s ease;
+
+        &.active {
+          background: rgba(232, 255, 0, 0.45);
+        }
+      }
+    }
+  }
+
+  // ── Status line ───────────────────────────────────
+  &__status {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.22);
+    text-transform: uppercase;
+    height: 1rem;
+
+    span {
+      animation: statusFade 0.35s ease both;
+    }
+
+    .status-ready {
+      color: #e8ff00;
+    }
+  }
+
+  // ── Corner HUDs ───────────────────────────────────
+  &__corner {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.13);
+    z-index: 6;
+
+    &--tl { top: 1.5rem;    left: 1.5rem; }
+    &--tr { top: 1.5rem;    right: 1.5rem; text-align: right; }
+    &--bl { bottom: 1.5rem; left: 1.5rem; }
+    &--br { bottom: 1.5rem; right: 1.5rem; text-align: right; }
+  }
+
+  // ── Horizontal data lines ─────────────────────────
+  &__datalines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+
+    .dl {
+      position: absolute;
+      left: 72px;
+      right: 72px;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(232, 255, 0, 0.07) 20%,
+        rgba(232, 255, 0, 0.07) 80%,
+        transparent
+      );
+
+      &--top    { top: 15%; }
+      &--bottom { bottom: 15%; }
+    }
+  }
+
+  // ── Phase: glitch ─────────────────────────────────
+  &.phase-glitch {
+    .logo-text {
+      animation: glitch 0.12s ease infinite;
+    }
+  }
+
+  // ── Phase: intro reveal ───────────────────────────
+  &.phase-intro {
+    .cinema-loader__center {
+      animation: centerReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+  }
+}
+
+// ── Keyframes ─────────────────────────────────────────────────
+@keyframes filmScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-96px); }
+}
+
+@keyframes filmBright {
+  from { background: rgba(232, 255, 0, 0.01); }
+  to   { background: rgba(232, 255, 0, 0.055); }
+}
+
+@keyframes crosshairSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%       { transform: scale(1.7); opacity: 0.5; }
+}
+
+@keyframes scanlineFlicker {
+  0%, 94%, 100% { opacity: 1; }
+  95%  { opacity: 0.75; }
+  96%  { opacity: 1; }
+  97%  { opacity: 0.82; }
+}
+
+@keyframes glitch {
+  0%   { clip-path: inset(18% 0 65% 0); transform: translate(-3px, 0);  color: #e8ff00; }
+  20%  { clip-path: inset(55% 0 12% 0); transform: translate(3px, 0);   color: #ff0050; }
+  40%  { clip-path: inset(8%  0 78% 0); transform: translate(0, 0);     color: #00ffff; }
+  60%  { clip-path: inset(78% 0 6%  0); transform: translate(-2px, 0);  color: #e8ff00; }
+  80%  { clip-path: inset(38% 0 42% 0); transform: translate(2px, 0);   color: #fff; }
+  100% { clip-path: inset(18% 0 65% 0); transform: translate(0, 0);     color: #e8ff00; }
+}
+
+@keyframes centerReveal {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes textFlicker {
+  0%, 88%, 100% { opacity: 0.45; }
+  90%  { opacity: 0.15; }
+  92%  { opacity: 0.45; }
+  95%  { opacity: 0.08; }
+  97%  { opacity: 0.45; }
+}
+
+@keyframes statusFade {
+  from { opacity: 0; transform: translateX(-5px); }
+  to   { opacity: 1; transform: translateX(0); }
+}

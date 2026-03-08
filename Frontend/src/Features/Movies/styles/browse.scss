@@ -1,0 +1,244 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap");
+
+.browse {
+  min-height: 100vh;
+  background: #060608;
+  color: #fff;
+  padding-top: max(8vw, 72px); // clears the tallest nav block
+
+  // ── Header ────────────────────────────────────────
+  &__header {
+    padding: 3rem clamp(1.5rem, 4vw, 4rem) 0;
+
+    &-eyebrow {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #e8ff00;
+      margin-bottom: 0.6rem;
+    }
+
+    &-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 0.9;
+      color: #fff;
+    }
+  }
+
+  // ── Controls ──────────────────────────────────────
+  &__controls {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(6, 6, 8, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 1rem clamp(1.5rem, 4vw, 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  // ── Category tabs ─────────────────────────────────
+  &__tabs {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  &__tab {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.1rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    &--active {
+      background: #e8ff00;
+      border-color: #e8ff00;
+      color: #060608;
+      font-weight: 500;
+    }
+  }
+
+  // ── Search bar ────────────────────────────────────
+  &__search {
+    position: relative;
+    flex: 1;
+    max-width: 360px;
+    min-width: 200px;
+
+    &-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      color: rgba(255, 255, 255, 0.25);
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.6rem 1rem 0.6rem 2.5rem;
+      color: #fff;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.82rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+      box-sizing: border-box;
+
+      &::placeholder { color: rgba(255, 255, 255, 0.18); }
+
+      &:focus {
+        border-color: rgba(232, 255, 0, 0.4);
+        background: rgba(232, 255, 0, 0.02);
+      }
+    }
+
+    &-clear {
+      position: absolute;
+      right: 0.7rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      padding: 0;
+      transition: color 0.2s;
+
+      &:hover { color: #e8ff00; }
+    }
+  }
+
+  // ── Results count ─────────────────────────────────
+  &__count {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.2);
+    white-space: nowrap;
+  }
+
+  // ── Grid ──────────────────────────────────────────
+  &__grid {
+    padding: 2.5rem clamp(1.5rem, 4vw, 4rem);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.5rem 1rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 2rem 1.2rem;
+    }
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+
+  // ── Empty state ───────────────────────────────────
+  &__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 6rem 2rem;
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    h3 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2rem;
+      color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  // ── Error state ───────────────────────────────────
+  &__error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.82rem;
+    color: #ff4d4d;
+    border: 1px solid rgba(255, 77, 77, 0.15);
+    background: rgba(255, 77, 77, 0.04);
+    margin: 0 clamp(1.5rem, 4vw, 4rem);
+  }
+
+  // ── Loader spinner row ────────────────────────────
+  &__loader {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+
+    &-ring {
+      width: 32px;
+      height: 32px;
+      border: 2px solid rgba(232, 255, 0, 0.15);
+      border-top-color: #e8ff00;
+      border-radius: 50%;
+      animation: browseSpin 0.7s linear infinite;
+    }
+  }
+
+  // ── Sentinel (infinite scroll trigger) ───────────
+  &__sentinel {
+    height: 1px;
+    width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  // ── End of results ────────────────────────────────
+  &__end {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.12);
+
+    &::before, &::after {
+      content: " ─── ";
+    }
+  }
+}
+
+@keyframes browseSpin {
+  to { transform: rotate(360deg); }
+}

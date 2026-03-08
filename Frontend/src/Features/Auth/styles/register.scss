@@ -1,0 +1,305 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap");
+
+.register-page {
+  min-height: 100vh;
+  width: 100%;
+  background: #06080a;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  // ── Left form panel ───────────────────────────────
+  &__form-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 10%;
+      bottom: 10%;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(0, 200, 255, 0.2),
+        transparent
+      );
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+  }
+
+  &__form-wrap {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  &__logo {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.2em;
+    color: #00c8ff;
+    margin-bottom: 2.5rem;
+  }
+
+  &__heading {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 3.2rem;
+    line-height: 0.95;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  &__sub {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: 2rem;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__field {
+    margin-bottom: 1.1rem;
+    position: relative;
+
+    label {
+      display: block;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.63rem;
+      letter-spacing: 0.25em;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+    }
+
+    input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-bottom-color: rgba(0, 200, 255, 0.3);
+      padding: 0.8rem 1rem;
+      color: #fff;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      box-sizing: border-box;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.12);
+      }
+
+      &:focus {
+        border-color: rgba(0, 200, 255, 0.6);
+        background: rgba(0, 200, 255, 0.02);
+      }
+    }
+  }
+
+  &__error {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.78rem;
+    color: #ff4d4d;
+    padding: 0.6rem 0.8rem;
+    border-left: 2px solid #ff4d4d;
+    background: rgba(255, 77, 77, 0.06);
+    margin-bottom: 1rem;
+  }
+
+  &__terms {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+
+    a {
+      color: #00c8ff;
+      text-decoration: none;
+    }
+  }
+
+  &__footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.25);
+
+    a {
+      color: #00c8ff;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Magnetic button override for register (cyan accent)
+  .magnetic-btn {
+    background: #00c8ff;
+    clip-path: none;
+    border-radius: 0;
+
+    &:hover {
+      background: #fff;
+    }
+  }
+
+  // ── Right visual panel ────────────────────────────
+  &__visual {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+
+    &-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #060a10 0%, #080a18 60%, #050810 100%);
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at 50% 50%,
+          rgba(0, 200, 255, 0.07) 0%,
+          transparent 65%
+        );
+      }
+    }
+
+    &-lines {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+
+      .vline {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(0, 200, 255, 0.05);
+
+        @for $i from 1 through 6 {
+          &:nth-child(#{$i}) {
+            left: #{$i * 14 + 2}%;
+            animation: vlinePulse #{2 + $i * 0.4}s ease-in-out infinite alternate;
+          }
+        }
+      }
+    }
+
+    &-orb {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 40% 40%,
+        rgba(0, 200, 255, 0.12),
+        rgba(0, 200, 255, 0.03) 60%,
+        transparent
+      );
+      border: 1px solid rgba(0, 200, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: orbPulse 4s ease-in-out infinite;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 30px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 200, 255, 0.07);
+        animation: orbPulse 4s ease-in-out infinite reverse;
+      }
+    }
+
+    &-icon {
+      font-size: 5rem;
+      filter: drop-shadow(0 0 30px rgba(0, 200, 255, 0.4));
+    }
+
+    &-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin-top: 3rem;
+
+      h2 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.5rem;
+        color: #fff;
+        margin-bottom: 1rem;
+        letter-spacing: 0.05em;
+      }
+    }
+
+    &-perks {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+
+      li {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+
+        &::before {
+          content: "▸";
+          color: #00c8ff;
+          font-size: 0.6rem;
+        }
+      }
+    }
+  }
+}
+
+@keyframes vlinePulse {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
+
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(0, 200, 255, 0.05); }
+  50% { transform: scale(1.03); box-shadow: 0 0 80px rgba(0, 200, 255, 0.12); }
+}

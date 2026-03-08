@@ -1,0 +1,524 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&family=Instrument+Serif:ital@0;1&display=swap");
+
+// ── Custom cursor ─────────────────────────────────────────────
+.showcase-cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(232, 255, 0, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9000;
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+  top: 0;
+  left: 0;
+  mix-blend-mode: difference;
+
+  &.visible { opacity: 1; }
+
+  &__dot {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    background: #e8ff00;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9001;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    transition: opacity 0.2s ease;
+
+    &.visible { opacity: 1; }
+  }
+}
+
+// ── Section ───────────────────────────────────────────────────
+.showcase {
+  position: relative;
+  background: #07070a;
+  overflow: hidden;
+  padding: 8rem 0 6rem;
+  cursor: none;
+
+  // ── Noise grain ──
+  &__grain {
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.028;
+    pointer-events: none;
+    z-index: 1;
+    animation: grainShift 0.5s steps(2) infinite;
+  }
+
+  // ── Giant BG text ──
+  &__bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(18rem, 30vw, 36rem);
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.025);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+  }
+
+  // ── Top bar ──
+  &__topbar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 clamp(2rem, 6vw, 7rem);
+    margin-bottom: 5rem;
+
+    &-label {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.2);
+      white-space: nowrap;
+    }
+
+    &-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  // ── Headline ──
+  &__headline {
+    position: relative;
+    z-index: 2;
+    padding: 0 clamp(2rem, 6vw, 7rem);
+    margin-bottom: 5rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+
+    .headline-wrap {
+      overflow: hidden;
+    }
+
+    .headline-line {
+      overflow: hidden;
+      line-height: 0.9;
+      margin-bottom: 0.1em;
+    }
+
+    .headline-static {
+      display: block;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(5rem, 11vw, 12rem);
+      letter-spacing: -0.01em;
+      color: #fff;
+
+      &--outline {
+        color: transparent;
+        -webkit-text-stroke: 2px rgba(255, 255, 255, 0.25);
+
+        @media (min-width: 768px) {
+          -webkit-text-stroke: 3px rgba(255, 255, 255, 0.25);
+        }
+      }
+    }
+
+    &-meta {
+      max-width: 280px;
+      padding-bottom: 1rem;
+      flex-shrink: 0;
+
+      p {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.3);
+        line-height: 1.75;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+      }
+    }
+
+    &-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.3rem;
+      border: 1px solid rgba(232, 255, 0, 0.25);
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #e8ff00;
+      cursor: pointer;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      width: fit-content;
+
+      svg { transition: transform 0.3s ease; }
+
+      &:hover {
+        background: rgba(232, 255, 0, 0.08);
+        border-color: rgba(232, 255, 0, 0.5);
+        svg { transform: translateX(4px); }
+      }
+    }
+  }
+
+  // ── Morphing word ──
+  .morphing-word {
+    display: inline-block;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(5rem, 11vw, 12rem);
+    letter-spacing: -0.01em;
+    color: #e8ff00;
+    min-width: 7ch;
+
+    &__char {
+      display: inline-block;
+      transition: color 0.05s ease;
+      animation: charFlicker 0.08s ease calc(var(--ci) * 0.02s) both;
+    }
+  }
+
+  // ── Genre reels ──
+  &__genres {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 6rem;
+    overflow: hidden;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+
+    &-row {
+      overflow: hidden;
+
+      &--rev { opacity: 0.5; }
+    }
+
+    &-track {
+      display: flex;
+      gap: 1rem;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .genre-pill {
+      flex-shrink: 0;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.2);
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+
+      &--accent {
+        color: rgba(232, 255, 0, 0.4);
+        border-color: rgba(232, 255, 0, 0.1);
+      }
+
+      &:hover {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+
+  // ── Cards ──
+  &__cards {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.04);
+    margin: 0 clamp(2rem, 4vw, 5rem) 6rem;
+
+    @media (max-width: 1100px) { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 600px)  { grid-template-columns: 1fr; }
+  }
+
+  // ── Stats ──
+  &__stats {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 clamp(2rem, 6vw, 7rem);
+    margin-bottom: 5rem;
+    flex-wrap: wrap;
+
+    &-divider {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  &__stat {
+    padding: 2rem 3rem;
+    text-align: center;
+    flex-shrink: 0;
+
+    &-num {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+
+      span {
+        color: #e8ff00;
+        font-size: 0.7em;
+      }
+    }
+
+    &-label {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  // ── Bottom tape ──
+  &__tape {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    background: #e8ff00;
+    padding: 0.7rem 0;
+
+    &-inner {
+      display: flex;
+      gap: 2rem;
+      width: max-content;
+      animation: tapeScroll 30s linear infinite;
+    }
+
+    .tape-item {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      color: #07070a;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .tape-dot {
+      font-size: 0.4rem;
+      opacity: 0.4;
+    }
+  }
+}
+
+// ── Show Card ─────────────────────────────────────────────────
+.show-card {
+  background: #07070a;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  cursor: none;
+  opacity: 0; // GSAP handles reveal
+
+  &__inner {
+    position: relative;
+    height: 100%;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  // Holographic shine
+  &__shine {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.06) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3;
+    mix-blend-mode: screen;
+  }
+
+  // Noise texture
+  &__noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__glow {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 80px;
+    background: radial-gradient(ellipse, var(--accent) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &:hover &__glow { opacity: 0.12; }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+  }
+
+  &__num {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.12);
+  }
+
+  &__tag {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--accent);
+    opacity: 0.7;
+  }
+
+  &__body {
+    position: relative;
+    z-index: 2;
+  }
+
+  &__label {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.05em;
+    color: #fff;
+    margin-bottom: 0.7rem;
+    transition: color 0.3s ease;
+  }
+
+  &:hover &__label { color: var(--accent); }
+
+  &__title {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.28);
+    line-height: 1.6;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+
+  &__bar {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+    margin-right: 1rem;
+    overflow: hidden;
+
+    &-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--delay);
+    }
+  }
+
+  &:hover &__bar-fill { width: 100%; }
+
+  &__arrow {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.2);
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  &:hover &__arrow {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  // Top accent line on hover
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 4;
+  }
+
+  &:hover::before { transform: scaleX(1); }
+}
+
+// ── Keyframes ─────────────────────────────────────────────────
+@keyframes grainShift {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-1%, 1%); }
+  50%  { transform: translate(1%, -1%); }
+  75%  { transform: translate(-1%, -1%); }
+  100% { transform: translate(1%, 1%); }
+}
+
+@keyframes charFlicker {
+  from { opacity: 0; transform: translateY(8px) scaleY(1.2); }
+  to   { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+@keyframes tapeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}

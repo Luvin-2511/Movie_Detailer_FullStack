@@ -1,0 +1,131 @@
+.magnetic-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 2rem;
+  background: #e8ff00;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+              background 0.3s ease;
+  outline: none;
+
+  &:hover {
+    background: #fff;
+
+    .magnetic-btn__text .magnetic-btn__letter {
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1),
+                  opacity 0.2s ease;
+      transition-delay: calc(var(--i) * 0.03s);
+    }
+
+    .magnetic-btn__text-hover .magnetic-btn__letter {
+      transform: translateY(0%);
+      opacity: 1;
+      transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1),
+                  opacity 0.2s ease;
+      transition-delay: calc(var(--ihov) * 0.03s);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translate(0, 0) !important;
+  }
+
+  // shared text styles
+  &__text,
+  &__text-hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    color: #0a0a0a;
+    pointer-events: none;
+    margin: 0;
+  }
+
+  // default text — sits in place, leaves upward on hover
+  &__text {
+    position: relative;
+    z-index: 2;
+
+    .magnetic-btn__letter {
+      display: inline-block;
+      transform: translateY(0%);
+      opacity: 1;
+      transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1),
+                  opacity 0.2s ease;
+      transition-delay: calc(var(--i) * 0.03s);
+    }
+  }
+
+  // hover text — starts below, rises into place on hover
+  &__text-hover {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+
+    .magnetic-btn__letter {
+      display: inline-block;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1),
+                  opacity 0.2s ease;
+      transition-delay: calc(var(--ihov) * 0.03s);
+    }
+  }
+}
+
+// ── Loading state ─────────────────────────────────────────────
+.magnetic-btn--loading {
+  cursor: not-allowed;
+  opacity: 0.85;
+
+  &::before {
+    display: none; // hide hover bg sweep
+  }
+}
+
+.magnetic-btn__spinner-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.magnetic-btn__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #e8ff00;
+  border-radius: 50%;
+  animation: magnetic-spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+
+.magnetic-btn__loading-text {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: 0.12em;
+  color: inherit;
+}
+
+@keyframes magnetic-spin {
+  to { transform: rotate(360deg); }
+}

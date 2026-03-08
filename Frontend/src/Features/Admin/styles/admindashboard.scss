@@ -1,0 +1,407 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap");
+
+// ── Layout ────────────────────────────────────────────────────
+.admin {
+  display: flex;
+  min-height: 100vh;
+  background: #060608;
+  color: #fff;
+  padding-top: max(8vw, 72px);
+
+  // ── Sidebar ───────────────────────────────────────
+  &__sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: #08080c;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+    z-index: 50;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 60px;
+      flex-direction: row;
+      align-items: center;
+      bottom: auto;
+      border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 0 1.5rem;
+      justify-content: space-between;
+    }
+  }
+
+  &__sidebar-logo {
+    padding: 1.8rem 1.5rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+
+    @media (max-width: 768px) {
+      padding: 0;
+      border: none;
+    }
+
+    span {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      color: #e8ff00;
+    }
+
+    small {
+      display: block;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      margin-top: 0.2rem;
+
+      @media (max-width: 768px) { display: none; }
+    }
+  }
+
+  &__sidebar-nav {
+    flex: 1;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 768px) {
+      flex-direction: row;
+      padding: 0;
+      gap: 0.25rem;
+    }
+  }
+
+  &__sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.75rem 1.5rem;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+
+    @media (max-width: 768px) {
+      padding: 0.4rem 0.8rem;
+      border-left: none;
+      border-bottom: 2px solid transparent;
+    }
+
+    &:hover { color: rgba(255,255,255,0.7); }
+
+    &--active {
+      color: #e8ff00;
+      background: rgba(232,255,0,0.04);
+      border-left-color: #e8ff00;
+
+      @media (max-width: 768px) {
+        border-left: none;
+        border-bottom-color: #e8ff00;
+        background: none;
+      }
+    }
+
+    .link-icon { font-size: 0.9rem; opacity: 0.7; }
+  }
+
+  &__sidebar-bottom {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+
+    @media (max-width: 768px) { display: none; }
+  }
+
+  &__sidebar-back {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    background: none;
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 0.45rem 0.9rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+
+    &:hover { color: #e8ff00; border-color: rgba(232,255,0,0.3); }
+  }
+
+  // ── Main content ──────────────────────────────────
+  &__main {
+    flex: 1;
+    margin-left: 220px;
+    min-height: 100vh;
+    padding: 2.5rem clamp(1.5rem, 3vw, 3rem);
+
+    @media (max-width: 768px) {
+      margin-left: 0;
+      padding-top: 80px;
+    }
+  }
+
+  &__page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__page-eyebrow {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #e8ff00;
+    margin-bottom: 0.4rem;
+  }
+
+  &__page-title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 0.9;
+    color: #fff;
+  }
+
+  // ── Stats grid ────────────────────────────────────
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.04);
+    margin-bottom: 3rem;
+  }
+
+  &__stat-card {
+    background: #060608;
+    padding: 1.8rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+
+    &:hover { background: rgba(255,255,255,0.015); }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent, #e8ff00);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    &:hover::before { transform: scaleX(1); }
+
+    &-value {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2.8rem;
+      color: var(--accent, #e8ff00);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    &-label {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+  }
+
+  // ── Table ─────────────────────────────────────────
+  &__table-wrap {
+    overflow-x: auto;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      padding: 0.85rem 1rem;
+      text-align: left;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      white-space: nowrap;
+    }
+
+    td {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.65);
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      vertical-align: middle;
+
+      &:first-child { color: rgba(255,255,255,0.85); }
+    }
+
+    tr:hover td { background: rgba(255,255,255,0.015); }
+  }
+
+  // ── Badges ────────────────────────────────────────
+  &__badge {
+    display: inline-block;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid;
+
+    &--admin  { color: #e8ff00; border-color: rgba(232,255,0,0.3); }
+    &--user   { color: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.1); }
+    &--banned { color: #ff4d4d; border-color: rgba(255,77,77,0.3); }
+    &--active { color: #00c8ff; border-color: rgba(0,200,255,0.3); }
+  }
+
+  // ── Action buttons ────────────────────────────────
+  &__actions {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  &__action-btn {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    background: none;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+
+    &--ban    { color: #ff9500; border-color: rgba(255,149,0,0.3);  &:hover { background: rgba(255,149,0,0.08);  } }
+    &--unban  { color: #00c8ff; border-color: rgba(0,200,255,0.3);  &:hover { background: rgba(0,200,255,0.08);  } }
+    &--delete { color: #ff4d4d; border-color: rgba(255,77,77,0.3);  &:hover { background: rgba(255,77,77,0.08);  } }
+    &--edit   { color: #e8ff00; border-color: rgba(232,255,0,0.3);  &:hover { background: rgba(232,255,0,0.06);  } }
+    &--add    {
+      color: #060608; background: #e8ff00; border-color: #e8ff00;
+      padding: 0.5rem 1.2rem; font-size: 0.65rem;
+      &:hover { background: #fff; border-color: #fff; }
+    }
+  }
+
+  // ── Search bar ────────────────────────────────────
+  &__search {
+    position: relative;
+    max-width: 300px;
+
+    input {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 0.55rem 1rem 0.55rem 2.2rem;
+      color: #fff;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.8rem;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+
+      &::placeholder { color: rgba(255,255,255,0.15); }
+      &:focus { border-color: rgba(232,255,0,0.35); }
+    }
+
+    svg {
+      position: absolute;
+      left: 0.7rem; top: 50%;
+      transform: translateY(-50%);
+      width: 14px; height: 14px;
+      color: rgba(255,255,255,0.2);
+      pointer-events: none;
+    }
+  }
+
+  // ── Empty / Error ─────────────────────────────────
+  &__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.15);
+  }
+
+  &__error {
+    padding: 1rem;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.8rem;
+    color: #ff4d4d;
+    border: 1px solid rgba(255,77,77,0.15);
+    background: rgba(255,77,77,0.04);
+    margin-bottom: 1.5rem;
+  }
+
+  // ── Skeleton ──────────────────────────────────────
+  &__skeleton-row {
+    height: 52px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.02) 0%,
+      rgba(255,255,255,0.05) 50%,
+      rgba(255,255,255,0.02) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  // ── Movie poster thumb ────────────────────────────
+  &__movie-poster {
+    width: 32px;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    background: #111;
+    vertical-align: middle;
+  }
+
+  // ── User avatar ───────────────────────────────────
+  &__avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(232,255,0,0.1);
+    border: 1px solid rgba(232,255,0,0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 0.85rem;
+    color: #e8ff00;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
