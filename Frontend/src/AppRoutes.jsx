@@ -5,14 +5,14 @@ import Private   from "./Features/Movies/components/Private.jsx";
 import AdminOnly from "./Features/Admin/components/AdminOnly.jsx";
 import PageLoader from "./Features/Auth/components/PageLoader.jsx";
 
-const Home           = lazy(() => import("./Features/Auth/Pages/Home.jsx"));
-const Login          = lazy(() => import("./Features/Auth/Pages/Login.jsx"));
-const Register       = lazy(() => import("./Features/Auth/Pages/Register.jsx"));
-const Browse         = lazy(() => import("./Features/Movies/Pages/Browse.jsx"));
-const MovieDetail    = lazy(() => import("./Features/Movies/Pages/MovieDetail.jsx"));
-const FavoritesPage  = lazy(() => import("./Features/User/Pages/FavoritesPage.jsx"));
-const HistoryPage    = lazy(() => import("./Features/User/Pages/HistoryPage.jsx"));
-const AdminDashboard = lazy(() => import("./Features/Admin/Pages/AdminDashboard.jsx"));
+const Home           = lazy(() => import("./Features/Auth/pages/Home.jsx"));
+const Login          = lazy(() => import("./Features/Auth/pages/Login.jsx"));
+const Register       = lazy(() => import("./Features/Auth/pages/Register.jsx"));
+const Browse         = lazy(() => import("./Features/Movies/pages/Browse.jsx"));
+const MovieDetail    = lazy(() => import("./Features/Movies/pages/MovieDetail.jsx"));
+const FavoritesPage  = lazy(() => import("./Features/User/pages/FavoritesPage.jsx"));
+const HistoryPage    = lazy(() => import("./Features/User/pages/HistoryPage.jsx"));
+const AdminDashboard = lazy(() => import("./Features/Admin/pages/AdminDashboard.jsx"));
 
 const Spinner = () => (
   <div style={{
