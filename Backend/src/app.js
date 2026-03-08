@@ -27,9 +27,10 @@ app.use(
     origin: (origin, callback) => {
       // Clean incoming origin just in case
       const cleanOrigin = origin && origin.endsWith('/') ? origin.slice(0, -1) : origin;
-
+      
       // Allow requests with no origin (e.g. mobile apps, curl, Postman)
-      if (!cleanOrigin || allowedOrigins.includes(cleanOrigin)) {
+      // Also automatically allow any vercel.app deploy preview
+      if (!cleanOrigin || allowedOrigins.includes(cleanOrigin) || cleanOrigin.endsWith(".vercel.app")) {
         callback(null, true);
       } else {
         callback(new Error(`CORS blocked for origin: ${origin}`));
