@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import CinemaLoader from "./CinemaLoader";
+import CinemaLoader from "./Cinemaloader";
 
 const PageLoader = ({ children }) => {
   const location = useLocation();
