@@ -18,12 +18,7 @@ const PLACEHOLDER_FACE = "https://via.placeholder.com/185x278/111/333?text=?";
 
 // ── Trailer Modal ─────────────────────────────────────────────
 const TrailerModal = ({ videoKey, onClose }) => {
-  // Close on backdrop click
-  const handleBackdrop = (e) => {
-    if (e.target === e.currentTarget) onClose();
-  };
-
-  // Close on Escape key
+  const handleBackdrop = (e) => { if (e.target === e.currentTarget) onClose(); };
   useEffect(() => {
     const handler = (e) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", handler);
@@ -45,6 +40,87 @@ const TrailerModal = ({ videoKey, onClose }) => {
   );
 };
 
+// ── Watch Modal (Multi-Source) ────────────────────────────────
+const SOURCES = [
+  { id: "vidsrc.me",  name: "Server 1 (Multi)", url: "https://vidsrc.me/embed" },
+  { id: "vidsrc.to",  name: "Server 2 (Fast)",  url: "https://vidsrc.to/embed" },
+  { id: "vidsrc.pro", name: "Server 3 (HD)",    url: "https://vidsrc.pro/embed" },
+];
+
+const WatchModal = ({ type, id, season = 1, episode = 1, languages = [], onClose }) => {
+  const [activeSource, setActiveSource] = useState(SOURCES[0]);
+  const handleBackdrop = (e) => { if (e.target === e.currentTarget) onClose(); };
+
+  useEffect(() => {
+    const handler = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  const getSourceUrl = (source) => {
+    if (type === "tv") {
+      return `${source.url}/tv?tmdb=${id}&s=${season}&e=${episode}`;
+    }
+    return `${source.url}/movie?tmdb=${id}`;
+  };
+
+  return (
+    <div className="detail__modal-overlay detail__modal-overlay--watch" onClick={handleBackdrop}>
+      <button className="detail__modal-overlay-close" onClick={onClose}>✕</button>
+      
+      <div className="detail__modal-watch-container">
+        {/* Sidebar for Server Selection & Info */}
+        <div className="detail__modal-watch-sidebar">
+          <div className="sidebar-section">
+            <h3 className="sidebar-title">Select Server</h3>
+            <div className="server-list">
+              {SOURCES.map(src => (
+                <button 
+                  key={src.id}
+                  className={`server-btn ${activeSource.id === src.id ? 'active' : ''}`}
+                  onClick={() => setActiveSource(src)}
+                >
+                  <span className="dot"></span>
+                  {src.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {languages.length > 0 && (
+            <div className="sidebar-section">
+              <h3 className="sidebar-title">Audio / Subtitles</h3>
+              <div className="language-tags">
+                {languages.map(lang => (
+                  <span key={lang.iso_639_1} className="lang-tag">
+                    {lang.english_name || lang.name}
+                  </span>
+                ))}
+              </div>
+              <p className="sidebar-hint">Select language inside the player settings.</p>
+            </div>
+          )}
+
+          <div className="sidebar-section sidebar-section--footer">
+            <p>If the player is slow, try switching servers.</p>
+          </div>
+        </div>
+
+        {/* Player Frame */}
+        <div className="detail__modal-frame detail__modal-frame--watch">
+          <iframe
+            key={activeSource.id}
+            src={getSourceUrl(activeSource)}
+            title="Movie Player"
+            allow="autoplay; encrypted-media; fullscreen"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ── Main Detail Page ──────────────────────────────────────────
 const MovieDetail = () => {
   const { type = "movie", id } = useParams();
@@ -56,6 +132,9 @@ const MovieDetail = () => {
 
   const { detail, trailer, cast, similar, loading, error } = useMovieDetail(id, type);
   const [modalOpen, setModalOpen] = useState(false);
+  const [watchModalOpen, setWatchModalOpen] = useState(false);
+  const [selectedSeason, setSelectedSeason] = useState(1);
+  const [selectedEpisode, setSelectedEpisode] = useState(1);
 
   // Scroll to top on mount
   useEffect(() => { window.scrollTo(0, 0); }, [id]);
@@ -149,6 +228,16 @@ const MovieDetail = () => {
       {modalOpen && trailer && (
         <TrailerModal videoKey={trailer.key} onClose={() => setModalOpen(false)} />
       )}
+      {watchModalOpen && (
+        <WatchModal
+          type={type}
+          id={id}
+          season={selectedSeason}
+          episode={selectedEpisode}
+          languages={detail.spoken_languages || []}
+          onClose={() => setWatchModalOpen(false)}
+        />
+      )}
       <Navbar />
 
       {/* ── Hero ── */}
@@ -203,6 +292,13 @@ const MovieDetail = () => {
               </button>
             )}
 
+            <button className="detail__hero-watch" onClick={() => setWatchModalOpen(true)}>
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
+              </svg>
+              WATCH NOW
+            </button>
+
             <button
               className={`detail__hero-fav ${isFav ? "detail__hero-fav--active" : ""}`}
               onClick={toggleFav}
@@ -254,6 +350,56 @@ const MovieDetail = () => {
               Trailer for this movie is currently unavailable.
             </div>
           )}
+        </section>
+
+        {/* ── Watch section ── */}
+        <section className="detail__watch-section">
+          <p className="detail__watch-section-label">◈ Streaming</p>
+          <h2>{type === "tv" ? "WATCH THE SHOW" : "WATCH THE MOVIE"}</h2>
+
+          <div className="detail__watch-container">
+            <div className="detail__watch-player-teaser" onClick={() => setWatchModalOpen(true)}>
+              <div className="teaser-overlay">
+                <div className="play-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <span>Click to stream {type === "tv" ? "Episodes" : "Full Movie"}</span>
+              </div>
+              {backdrop && <img src={backdrop} alt="Teaser" />}
+            </div>
+
+            {type === "tv" && detail.seasons && (
+              <div className="detail__watch-tv-controls">
+                <div className="control-group">
+                  <label>Season</label>
+                  <select
+                    value={selectedSeason}
+                    onChange={(e) => setSelectedSeason(Number(e.target.value))}
+                  >
+                    {detail.seasons
+                      .filter(s => s.season_number > 0)
+                      .map(s => (
+                        <option key={s.id} value={s.season_number}>
+                          Season {s.season_number}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <div className="control-group">
+                  <label>Episode</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max={detail.seasons.find(s => s.season_number === selectedSeason)?.episode_count || 100}
+                    value={selectedEpisode}
+                    onChange={(e) => setSelectedEpisode(Number(e.target.value))}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </section>
 
         {/* ── Cast section ── */}
