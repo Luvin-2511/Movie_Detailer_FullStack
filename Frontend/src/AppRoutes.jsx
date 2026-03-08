@@ -12,7 +12,7 @@ const Browse         = lazy(() => import("./Features/Movies/pages/Browse.jsx"));
 const MovieDetail    = lazy(() => import("./Features/Movies/pages/Moviedetail.jsx"));
 const FavoritesPage  = lazy(() => import("./Features/User/pages/FavoritesPage.jsx"));
 const HistoryPage    = lazy(() => import("./Features/User/pages/HistoryPage.jsx"));
-const AdminDashboard = lazy(() => import("./Features/Admin/pages/AdminDashboard.jsx"));
+const AdminDashboard = lazy(() => import("./Features/Admin/pages/Admindashboard.jsx"));
 
 const Spinner = () => (
   <div style={{
