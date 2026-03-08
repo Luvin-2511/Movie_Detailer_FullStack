@@ -1,17 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   fetchTrendingAPI, fetchPopularMoviesAPI, fetchPopularTVAPI,
-  fetchTopRatedAPI, searchMultiAPI,
+  fetchTopRatedAPI, searchMultiAPI, discoverMoviesAPI, discoverTVAPI
 } from "../../Features/Movies/services/movies.api";
 
 // ── Async thunk ───────────────────────────────────────────────
 export const fetchMovies = createAsyncThunk(
   "movies/fetch",
-  async ({ category, searchQuery, page }, { rejectWithValue }) => {
+  async ({ category, searchQuery, genreId, page }, { rejectWithValue }) => {
     try {
       let res;
       if (searchQuery?.trim()) {
         res = await searchMultiAPI(searchQuery.trim(), page);
+      } else if (genreId) {
+        if (category === "tv") {
+          res = await discoverTVAPI(genreId, page);
+        } else {
+          res = await discoverMoviesAPI(genreId, page);
+        }
       } else {
         switch (category) {
           case "movies":   res = await fetchPopularMoviesAPI(page); break;
@@ -21,7 +27,9 @@ export const fetchMovies = createAsyncThunk(
         }
       }
       const results = (res.data.results || []).filter(
-        (item) => item.media_type !== "person" && (item.poster_path || item.backdrop_path)
+        (item) =>
+          (item.media_type === "person" && item.profile_path) ||
+          (item.media_type !== "person" && (item.poster_path || item.backdrop_path))
       );
       return { results, totalPages: res.data.total_pages || 1, page };
     } catch (err) {
@@ -42,17 +50,27 @@ const moviesSlice = createSlice({
     error:          "",
     activeCategory: "trending",
     searchQuery:    "",
+    genreId:        null,
   },
   reducers: {
     setActiveCategory: (state, action) => {
       state.activeCategory = action.payload;
       state.searchQuery    = "";
+      state.genreId        = null;
       state.items          = [];
       state.page           = 1;
       state.hasMore        = true;
     },
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
+      state.genreId     = null;
+      state.items       = [];
+      state.page        = 1;
+      state.hasMore     = true;
+    },
+    setGenreId: (state, action) => {
+      state.genreId     = action.payload;
+      state.searchQuery = "";
       state.items       = [];
       state.page        = 1;
       state.hasMore     = true;
@@ -85,7 +103,7 @@ const moviesSlice = createSlice({
   },
 });
 
-export const { setActiveCategory, setSearchQuery, resetMovies } = moviesSlice.actions;
+export const { setActiveCategory, setSearchQuery, setGenreId, resetMovies } = moviesSlice.actions;
 
 // ── Selectors ─────────────────────────────────────────────────
 export const selectMovies         = (state) => state.movies.items;
@@ -95,5 +113,6 @@ export const selectHasMore        = (state) => state.movies.hasMore;
 export const selectMoviePage      = (state) => state.movies.page;
 export const selectActiveCategory = (state) => state.movies.activeCategory;
 export const selectSearchQuery    = (state) => state.movies.searchQuery;
+export const selectGenreId        = (state) => state.movies.genreId;
 
 export default moviesSlice.reducer;

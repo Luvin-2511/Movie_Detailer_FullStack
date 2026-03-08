@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import useAuth from "../../Auth/hooks/useAuth";
 import "../styles/navbar.scss";
+import { useTheme } from "../../../context/ThemeContext.jsx";
 
 const Navbar = () => {
   const overlayRef   = useRef(null);
@@ -11,6 +12,7 @@ const Navbar = () => {
   const location     = useLocation().pathname;
   const navigate     = useNavigate();
   const { user, isAdmin, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mounted,  setMounted]  = useState(false);
 
@@ -18,6 +20,7 @@ const Navbar = () => {
 
   const menuItems = [
     { label: "Browse",    to: "/browse"    },
+    { label: "Watchlist", to: "/watchlist", auth: true      },
     { label: "Favorites", to: "/favorites", auth: true      },
     { label: "History",   to: "/history",   auth: true      },
     { label: "Admin",     to: "/admin",     adminOnly: true  },
@@ -141,6 +144,14 @@ const Navbar = () => {
           </div>
         </div>
       )}
+
+      <button
+        onClick={toggleTheme}
+        className="nav-theme-toggle"
+        aria-label="Toggle Theme"
+      >
+        {theme === "dark" ? "☀️" : "🌙"}
+      </button>
     </>
   );
 };

@@ -32,6 +32,18 @@ const userSchema = new mongoose.Schema(
       },
     ],
 
+    watchlist: [
+      {
+        movieId:    { type: String },
+        title:      { type: String },
+        posterPath: { type: String, default: "" },
+        mediaType:  { type: String, enum: ["movie", "tv", "person"], default: "movie" },
+        rating:     { type: Number, default: 0  },
+        year:       { type: String, default: "" },
+        addedAt:    { type: Date,   default: Date.now },
+      },
+    ],
+
     watchHistory: [
       {
         movieId:    { type: String },

@@ -1,9 +1,10 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import useMovies from "../hooks/useMovies";
 import useInfiniteScroll from "../hooks/Useinfinitescroll";
 import MovieCard from "../components/Moviecard";
 import { SkeletonGrid } from "../components/MovieSkeleton";
 import Navbar from "../components/Navbar";
+import { fetchGenresAPI } from "../services/movies.api";
 import "../styles/browse.scss";
 
 const CATEGORIES = [
@@ -14,10 +15,18 @@ const CATEGORIES = [
 ];
 
 const Browse = () => {
+  const [genresList, setGenresList] = useState([]);
   const {
     movies, loading, error, hasMore, loadMore,
-    activeCategory, searchQuery, changeCategory, changeSearch,
+    activeCategory, searchQuery, genreId, changeCategory, changeSearch, changeGenre
   } = useMovies();
+
+  // Fetch genres on mount
+  useEffect(() => {
+    fetchGenresAPI()
+      .then(res => setGenresList(res.data.genres || []))
+      .catch(err => console.error("Failed to load genres:", err));
+  }, []);
 
   const sentinelRef = useInfiniteScroll(loadMore, hasMore && !loading);
   const isSearching = searchQuery.trim().length > 0;
@@ -63,6 +72,34 @@ const Browse = () => {
             <button className="browse__search-clear" onClick={() => changeSearch("")}>×</button>
           )}
         </div>
+
+        {/* ── Genre Dropdown ── */}
+        {(activeCategory === "movies" || activeCategory === "tv") && !isSearching && (
+          <div className="browse__genre-filter">
+            <select
+              value={genreId || ""}
+              onChange={(e) => changeGenre(e.target.value)}
+              className="browse__genre-select"
+              style={{
+                marginLeft: "1rem",
+                padding: "0.55rem 1rem",
+                background: "rgba(var(--text-rgb), 0.03)",
+                border: "1px solid rgba(var(--text-rgb), 0.08)",
+                color: "var(--text-color)",
+                borderRadius: "30px",
+                fontFamily: "DM Sans, sans-serif",
+                fontSize: "0.85rem",
+                outline: "none",
+                cursor: "pointer"
+              }}
+            >
+              <option value="">All Genres</option>
+              {genresList.map(g => (
+                <option key={g.id} value={g.id}>{g.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
 
         {!loading && movies.length > 0 && (
           <span className="browse__count">{movies.length} titles</span>

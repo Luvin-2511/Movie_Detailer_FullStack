@@ -125,7 +125,7 @@
       font-family: "Bebas Neue", sans-serif;
       font-size: clamp(5rem, 11vw, 12rem);
       letter-spacing: -0.01em;
-      color: #fff;
+      color: var(--text-color);
 
       &--outline {
         color: transparent;
@@ -238,7 +238,7 @@
       }
 
       &:hover {
-        color: #fff;
+        color: var(--text-color);
         border-color: rgba(255, 255, 255, 0.2);
       }
     }
@@ -284,7 +284,7 @@
     &-num {
       font-family: "Bebas Neue", sans-serif;
       font-size: clamp(2.5rem, 4vw, 4rem);
-      color: #fff;
+      color: var(--text-color);
       line-height: 1;
       margin-bottom: 0.3rem;
 
@@ -433,7 +433,7 @@
     font-family: "Bebas Neue", sans-serif;
     font-size: 2.2rem;
     letter-spacing: 0.05em;
-    color: #fff;
+    color: var(--text-color);
     margin-bottom: 0.7rem;
     transition: color 0.3s ease;
   }

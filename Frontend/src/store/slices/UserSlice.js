@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getFavoritesAPI, addFavoriteAPI, removeFavoriteAPI,
+  getWatchlistAPI, addWatchlistAPI, removeWatchlistAPI,
   getHistoryAPI, addToHistoryAPI, clearHistoryAPI,
 } from "../../Features/User/services/user.api";
 
@@ -22,6 +23,28 @@ export const addFavorite = createAsyncThunk("user/addFavorite", async (movie, { 
 export const removeFavorite = createAsyncThunk("user/removeFavorite", async (movieId, { rejectWithValue }) => {
   try {
     await removeFavoriteAPI(movieId);
+    return movieId;
+  } catch (err) { return rejectWithValue(movieId); }
+});
+
+// ── Watchlist thunks ──────────────────────────────────────────
+export const fetchWatchlist = createAsyncThunk("user/fetchWatchlist", async (_, { rejectWithValue }) => {
+  try {
+    const res = await getWatchlistAPI();
+    return res.data.watchlist || [];
+  } catch { return rejectWithValue([]); }
+});
+
+export const addWatchlist = createAsyncThunk("user/addWatchlist", async (movie, { rejectWithValue }) => {
+  try {
+    await addWatchlistAPI(movie);
+    return movie;
+  } catch (err) { return rejectWithValue(movie.movieId); }
+});
+
+export const removeWatchlist = createAsyncThunk("user/removeWatchlist", async (movieId, { rejectWithValue }) => {
+  try {
+    await removeWatchlistAPI(movieId);
     return movieId;
   } catch (err) { return rejectWithValue(movieId); }
 });
@@ -53,15 +76,19 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     favorites:        [],
+    watchlist:        [],
     history:          [],
     favLoading:       false,
+    watchLoading:     false,
     histLoading:      false,
     favError:         "",
+    watchError:       "",
     histError:        "",
   },
   reducers: {
     clearUserData: (state) => {
       state.favorites  = [];
+      state.watchlist  = [];
       state.history    = [];
     },
   },
@@ -93,6 +120,27 @@ const userSlice = createSlice({
         // Could re-fetch here; keeping simple
       });
 
+    // Watchlist
+    builder
+      .addCase(fetchWatchlist.pending,   (state) => { state.watchLoading = true; })
+      .addCase(fetchWatchlist.fulfilled, (state, action) => { state.watchlist = action.payload; state.watchLoading = false; })
+      .addCase(fetchWatchlist.rejected,  (state) => { state.watchLoading = false; });
+
+    builder
+      .addCase(addWatchlist.pending, (state, action) => {
+        const movie = action.meta.arg;
+        if (!state.watchlist.find((w) => w.movieId === movie.movieId))
+          state.watchlist.unshift(movie);
+      })
+      .addCase(addWatchlist.rejected, (state, action) => {
+        state.watchlist = state.watchlist.filter((w) => w.movieId !== action.payload);
+      });
+
+    builder
+      .addCase(removeWatchlist.pending, (state, action) => {
+        state.watchlist = state.watchlist.filter((w) => w.movieId !== action.meta.arg);
+      });
+
     // History
     builder
       .addCase(fetchHistory.pending,   (state) => { state.histLoading = true; })
@@ -118,12 +166,17 @@ export const { clearUserData } = userSlice.actions;
 
 // ── Selectors ─────────────────────────────────────────────────
 export const selectFavorites    = (state) => state.user.favorites;
+export const selectWatchlist    = (state) => state.user.watchlist;
 export const selectHistory      = (state) => state.user.history;
 export const selectFavLoading   = (state) => state.user.favLoading;
+export const selectWatchLoading = (state) => state.user.watchLoading;
 export const selectHistLoading  = (state) => state.user.histLoading;
 export const selectFavError     = (state) => state.user.favError;
+export const selectWatchError   = (state) => state.user.watchError;
 export const selectHistError    = (state) => state.user.histError;
 export const selectIsFavorited  = (movieId) => (state) =>
   state.user.favorites.some((f) => f.movieId === String(movieId));
+export const selectIsWatchlisted = (movieId) => (state) =>
+  state.user.watchlist.some((w) => w.movieId === String(movieId));
 
 export default userSlice.reducer;

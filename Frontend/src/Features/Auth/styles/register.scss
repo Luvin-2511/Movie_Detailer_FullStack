@@ -57,7 +57,7 @@
     font-family: "Bebas Neue", sans-serif;
     font-size: 3.2rem;
     line-height: 0.95;
-    color: #fff;
+    color: var(--text-color);
     margin-bottom: 0.5rem;
   }
 
@@ -65,7 +65,7 @@
     font-family: "DM Sans", sans-serif;
     font-size: 0.82rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(var(--text-rgb), 0.35);
     margin-bottom: 2rem;
   }
 
@@ -88,18 +88,18 @@
       font-family: "DM Sans", sans-serif;
       font-size: 0.63rem;
       letter-spacing: 0.25em;
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(var(--text-rgb), 0.4);
       text-transform: uppercase;
       margin-bottom: 0.45rem;
     }
 
     input {
       width: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(var(--text-rgb), 0.03);
+      border: 1px solid rgba(var(--text-rgb), 0.07);
       border-bottom-color: rgba(0, 200, 255, 0.3);
       padding: 0.8rem 1rem;
-      color: #fff;
+      color: var(--text-color);
       font-family: "DM Sans", sans-serif;
       font-size: 0.88rem;
       outline: none;
@@ -107,7 +107,7 @@
       box-sizing: border-box;
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.12);
+        color: rgba(var(--text-rgb), 0.12);
       }
 
       &:focus {
@@ -130,7 +130,7 @@
   &__terms {
     font-family: "DM Sans", sans-serif;
     font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(var(--text-rgb), 0.2);
     margin-bottom: 1.5rem;
     line-height: 1.5;
 
@@ -145,7 +145,7 @@
     text-align: center;
     font-family: "DM Sans", sans-serif;
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(var(--text-rgb), 0.25);
 
     a {
       color: #00c8ff;
@@ -261,7 +261,7 @@
       h2 {
         font-family: "Bebas Neue", sans-serif;
         font-size: 2.5rem;
-        color: #fff;
+        color: var(--text-color);
         margin-bottom: 1rem;
         letter-spacing: 0.05em;
       }
@@ -279,7 +279,7 @@
         font-family: "DM Sans", sans-serif;
         font-size: 0.8rem;
         font-weight: 300;
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(var(--text-rgb), 0.4);
         display: flex;
         align-items: center;
         gap: 0.6rem;

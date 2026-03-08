@@ -4,8 +4,8 @@
 .admin {
   display: flex;
   min-height: 100vh;
-  background: #060608;
-  color: #fff;
+  background: var(--bg-color);
+  color: var(--text-color);
   padding-top: max(8vw, 72px);
 
   // ── Sidebar ───────────────────────────────────────
@@ -13,7 +13,7 @@
     width: 220px;
     flex-shrink: 0;
     background: #08080c;
-    border-right: 1px solid rgba(255,255,255,0.05);
+    border-right: 1px solid rgba(var(--text-rgb),0.05);
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -27,7 +27,7 @@
       align-items: center;
       bottom: auto;
       border-right: none;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(var(--text-rgb),0.05);
       padding: 0 1.5rem;
       justify-content: space-between;
     }
@@ -35,7 +35,7 @@
 
   &__sidebar-logo {
     padding: 1.8rem 1.5rem 1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(var(--text-rgb),0.05);
 
     @media (max-width: 768px) {
       padding: 0;
@@ -55,7 +55,7 @@
       font-size: 0.55rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
+      color: rgba(var(--text-rgb),0.2);
       margin-top: 0.2rem;
 
       @media (max-width: 768px) { display: none; }
@@ -84,7 +84,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
+    color: rgba(var(--text-rgb),0.3);
     cursor: pointer;
     background: none;
     border: none;
@@ -99,7 +99,7 @@
       border-bottom: 2px solid transparent;
     }
 
-    &:hover { color: rgba(255,255,255,0.7); }
+    &:hover { color: rgba(var(--text-rgb),0.7); }
 
     &--active {
       color: #e8ff00;
@@ -118,7 +118,7 @@
 
   &__sidebar-bottom {
     padding: 1rem 1.5rem;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(var(--text-rgb),0.05);
 
     @media (max-width: 768px) { display: none; }
   }
@@ -128,9 +128,9 @@
     font-size: 0.65rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.2);
+    color: rgba(var(--text-rgb),0.2);
     background: none;
-    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid rgba(var(--text-rgb),0.07);
     padding: 0.45rem 0.9rem;
     cursor: pointer;
     width: 100%;
@@ -155,7 +155,7 @@
   &__page-header {
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(var(--text-rgb),0.05);
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -176,7 +176,7 @@
     font-family: "Bebas Neue", sans-serif;
     font-size: clamp(2rem, 4vw, 3.5rem);
     line-height: 0.9;
-    color: #fff;
+    color: var(--text-color);
   }
 
   // ── Stats grid ────────────────────────────────────
@@ -184,18 +184,18 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1px;
-    background: rgba(255,255,255,0.04);
+    background: rgba(var(--text-rgb),0.04);
     margin-bottom: 3rem;
   }
 
   &__stat-card {
-    background: #060608;
+    background: var(--bg-color);
     padding: 1.8rem 1.5rem;
     position: relative;
     overflow: hidden;
     transition: background 0.2s;
 
-    &:hover { background: rgba(255,255,255,0.015); }
+    &:hover { background: rgba(var(--text-rgb),0.015); }
 
     &::before {
       content: "";
@@ -223,14 +223,14 @@
       font-size: 0.6rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
+      color: rgba(var(--text-rgb),0.25);
     }
   }
 
   // ── Table ─────────────────────────────────────────
   &__table-wrap {
     overflow-x: auto;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(var(--text-rgb),0.05);
   }
 
   &__table {
@@ -242,26 +242,26 @@
       font-size: 0.58rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
+      color: rgba(var(--text-rgb),0.2);
       padding: 0.85rem 1rem;
       text-align: left;
-      background: rgba(255,255,255,0.02);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: rgba(var(--text-rgb),0.02);
+      border-bottom: 1px solid rgba(var(--text-rgb),0.05);
       white-space: nowrap;
     }
 
     td {
       font-family: "DM Sans", sans-serif;
       font-size: 0.8rem;
-      color: rgba(255,255,255,0.65);
+      color: rgba(var(--text-rgb),0.65);
       padding: 0.85rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(var(--text-rgb),0.03);
       vertical-align: middle;
 
-      &:first-child { color: rgba(255,255,255,0.85); }
+      &:first-child { color: rgba(var(--text-rgb),0.85); }
     }
 
-    tr:hover td { background: rgba(255,255,255,0.015); }
+    tr:hover td { background: rgba(var(--text-rgb),0.015); }
   }
 
   // ── Badges ────────────────────────────────────────
@@ -275,7 +275,7 @@
     border: 1px solid;
 
     &--admin  { color: #e8ff00; border-color: rgba(232,255,0,0.3); }
-    &--user   { color: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.1); }
+    &--user   { color: rgba(var(--text-rgb),0.3); border-color: rgba(var(--text-rgb),0.1); }
     &--banned { color: #ff4d4d; border-color: rgba(255,77,77,0.3); }
     &--active { color: #00c8ff; border-color: rgba(0,200,255,0.3); }
   }
@@ -306,7 +306,7 @@
     &--add    {
       color: #060608; background: #e8ff00; border-color: #e8ff00;
       padding: 0.5rem 1.2rem; font-size: 0.65rem;
-      &:hover { background: #fff; border-color: #fff; }
+      &:hover { background: var(--text-color); border-color: var(--text-color); }
     }
   }
 
@@ -317,17 +317,17 @@
 
     input {
       width: 100%;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(var(--text-rgb),0.03);
+      border: 1px solid rgba(var(--text-rgb),0.07);
       padding: 0.55rem 1rem 0.55rem 2.2rem;
-      color: #fff;
+      color: var(--text-color);
       font-family: "DM Sans", sans-serif;
       font-size: 0.8rem;
       outline: none;
       box-sizing: border-box;
       transition: border-color 0.2s;
 
-      &::placeholder { color: rgba(255,255,255,0.15); }
+      &::placeholder { color: rgba(var(--text-rgb),0.15); }
       &:focus { border-color: rgba(232,255,0,0.35); }
     }
 
@@ -336,7 +336,7 @@
       left: 0.7rem; top: 50%;
       transform: translateY(-50%);
       width: 14px; height: 14px;
-      color: rgba(255,255,255,0.2);
+      color: rgba(var(--text-rgb),0.2);
       pointer-events: none;
     }
   }
@@ -347,7 +347,7 @@
     padding: 4rem 2rem;
     font-family: "DM Sans", sans-serif;
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.15);
+    color: rgba(var(--text-rgb),0.15);
   }
 
   &__error {
@@ -363,12 +363,12 @@
   // ── Skeleton ──────────────────────────────────────
   &__skeleton-row {
     height: 52px;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(var(--text-rgb),0.03);
     background: linear-gradient(
       90deg,
-      rgba(255,255,255,0.02) 0%,
-      rgba(255,255,255,0.05) 50%,
-      rgba(255,255,255,0.02) 100%
+      rgba(var(--text-rgb),0.02) 0%,
+      rgba(var(--text-rgb),0.05) 50%,
+      rgba(var(--text-rgb),0.02) 100%
     );
     background-size: 200% 100%;
     animation: shimmer 1.4s ease-in-out infinite;

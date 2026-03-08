@@ -31,7 +31,7 @@
       font-family: "Bebas Neue", sans-serif;
       font-size: 1.6rem;
       letter-spacing: 0.08em;
-      color: #fff;
+      color: var(--text-color);
     }
   }
 
@@ -90,7 +90,7 @@
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.08);
       padding: 0.55rem 0.8rem;
-      color: #fff;
+      color: var(--text-color);
       font-family: "DM Sans", sans-serif;
       font-size: 0.82rem;
       outline: none;
@@ -125,7 +125,7 @@
     cursor: pointer;
     transition: all 0.2s;
 
-    &:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+    &:hover { color: var(--text-color); border-color: rgba(var(--text-rgb),0.3); }
   }
 
   &__save {
@@ -141,7 +141,7 @@
     font-weight: 500;
     transition: all 0.2s;
 
-    &:hover:not(:disabled) { background: #fff; border-color: #fff; }
+    &:hover:not(:disabled) { background: var(--text-color); border-color: var(--text-color); }
     &:disabled { opacity: 0.5; cursor: not-allowed; }
   }
 }
@@ -172,7 +172,7 @@
   &__title {
     font-family: "Bebas Neue", sans-serif;
     font-size: 1.6rem;
-    color: #fff;
+    color: var(--text-color);
     margin-bottom: 0.6rem;
   }
 
@@ -207,7 +207,7 @@
     color: rgba(255,255,255,0.35);
     cursor: pointer;
     transition: all 0.2s;
-    &:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+    &:hover { color: var(--text-color); border-color: rgba(var(--text-rgb),0.3); }
   }
 }
 

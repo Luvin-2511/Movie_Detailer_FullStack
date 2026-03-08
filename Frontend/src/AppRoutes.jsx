@@ -10,13 +10,15 @@ const Login          = lazy(() => import("./Features/Auth/pages/Login.jsx"));
 const Register       = lazy(() => import("./Features/Auth/pages/Register.jsx"));
 const Browse         = lazy(() => import("./Features/Movies/pages/Browse.jsx"));
 const MovieDetail    = lazy(() => import("./Features/Movies/pages/Moviedetail.jsx"));
+const PersonDetail   = lazy(() => import("./Features/Movies/pages/PersonDetail.jsx"));
 const FavoritesPage  = lazy(() => import("./Features/User/pages/FavoritesPage.jsx"));
+const WatchlistPage  = lazy(() => import("./Features/User/pages/WatchlistPage.jsx"));
 const HistoryPage    = lazy(() => import("./Features/User/pages/HistoryPage.jsx"));
 const AdminDashboard = lazy(() => import("./Features/Admin/pages/Admindashboard.jsx"));
 
 const Spinner = () => (
   <div style={{
-    position: "fixed", inset: 0, background: "#060608",
+    position: "fixed", inset: 0, background: "var(--bg-color)",
     display: "flex", alignItems: "center", justifyContent: "center",
   }}>
     <div style={{
@@ -41,7 +43,9 @@ const AppRoutes = () => (
           <Route path="/browse"    element={<Private><Browse /></Private>} />
           <Route path="/movie/:id" element={<Private><MovieDetail /></Private>} />
           <Route path="/tv/:id"    element={<Private><MovieDetail /></Private>} />
+          <Route path="/person/:id" element={<Private><PersonDetail /></Private>} />
           <Route path="/favorites" element={<Private><FavoritesPage /></Private>} />
+          <Route path="/watchlist" element={<Private><WatchlistPage /></Private>} />
           <Route path="/history"   element={<Private><HistoryPage /></Private>} />
           <Route path="/admin"     element={<AdminOnly><AdminDashboard /></AdminOnly>} />
           <Route path="*"          element={<Navigate to="/" replace />} />

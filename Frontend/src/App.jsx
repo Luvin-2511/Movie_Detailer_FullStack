@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { restoreSession } from "./store/slices/AuthSlice.js";
 import store from "./store/Store.js";
 import AppRoutes from "./AppRoutes.jsx";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
 
 // Runs once on mount to restore JWT session from cookie
 const SessionRestorer = ({ children }) => {
@@ -17,9 +18,11 @@ const SessionRestorer = ({ children }) => {
 const App = () => {
   return (
     <Provider store={store}>
-      <SessionRestorer>
-        <AppRoutes />
-      </SessionRestorer>
+      <ThemeProvider>
+        <SessionRestorer>
+          <AppRoutes />
+        </SessionRestorer>
+      </ThemeProvider>
     </Provider>
   );
 };

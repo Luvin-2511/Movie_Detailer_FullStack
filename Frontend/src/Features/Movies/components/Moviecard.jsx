@@ -11,15 +11,17 @@ const MovieCard = ({ movie }) => {
   const { isAuthenticated } = useAuth();
   const [imgErr, setImgErr] = useState(false);
 
+  const isPerson   = movie.media_type === "person";
   const title      = movie.title || movie.name || "Untitled";
-  const year       = (movie.release_date || movie.first_air_date || "").slice(0, 4);
-  const rating     = movie.vote_average?.toFixed(1) || "N/A";
-  const type       = movie.media_type === "tv" ? "TV" : "FILM";
-  const poster     = movie.poster_path && !imgErr
-    ? `${IMG_BASE}${movie.poster_path}`
+  const year       = isPerson ? (movie.known_for_department || "Actor") : (movie.release_date || movie.first_air_date || "").slice(0, 4);
+  const rating     = isPerson ? null : movie.vote_average?.toFixed(1) || "N/A";
+  const type       = isPerson ? "PERSON" : movie.media_type === "tv" ? "TV" : "FILM";
+  const posterPath = movie.profile_path || movie.poster_path;
+  const poster     = posterPath && !imgErr
+    ? `${IMG_BASE}${posterPath}`
     : PLACEHOLDER;
 
-  const ratingColor =
+  const ratingColor = rating === null ? "transparent" :
     rating >= 8 ? "#e8ff00" :
     rating >= 6 ? "#00c8ff" :
     rating >= 4 ? "#ff9500" : "#ff3c5a";
@@ -52,9 +54,11 @@ const MovieCard = ({ movie }) => {
         <span className="movie-card__type">{type}</span>
 
         {/* Rating badge */}
-        <span className="movie-card__rating" style={{ "--rc": ratingColor }}>
-          ★ {rating}
-        </span>
+        {!isPerson && (
+          <span className="movie-card__rating" style={{ "--rc": ratingColor }}>
+            ★ {rating}
+          </span>
+        )}
       </div>
 
       <div className="movie-card__info">

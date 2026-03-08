@@ -46,7 +46,7 @@
 .private-loading {
   position: fixed;
   inset: 0;
-  background: #060608;
+  background: var(--bg-color);
   display: flex;
   align-items: center;
   justify-content: center;

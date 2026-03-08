@@ -1,0 +1,56 @@
+:root {
+  /* Default Dark Theme Variables */
+  --bg-color: #060608;
+  --bg-rgb: 6, 6, 8;
+  --text-color: rgba(255, 255, 255, 0.85); /* softened from #ffffff */
+  --text-rgb: 255, 255, 255;
+  --text-muted: rgba(255, 255, 255, 0.65);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --accent-color: #e8ff00;
+  --nav-bg: rgba(6, 6, 8, 0.9);
+  --skeleton-bg: rgba(255, 255, 255, 0.05);
+  --hover-bg: rgba(255, 255, 255, 0.1);
+}
+
+:root.light-theme {
+  /* Light Theme Variables */
+  --bg-color: #e8e8ed; /* softened from #f5f5f7 to reduce glare */
+  --bg-rgb: 232, 232, 237;
+  --text-color: rgba(0, 0, 0, 0.85); /* softened black */
+  --text-rgb: 0, 0, 0;
+  --text-muted: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --accent-color: #e8ff00; /* Keeping yellow accent, but maybe darken text on it? */
+  --nav-bg: rgba(232, 232, 237, 0.9);
+  --skeleton-bg: rgba(0, 0, 0, 0.05);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0s, color 0s;
+}
+
+/* View Transition API styles for smooth circular theme toggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+[data-theme='dark']::view-transition-old(root) {
+  z-index: 2;
+}
+
+[data-theme='dark']::view-transition-new(root) {
+  z-index: 1;
+}

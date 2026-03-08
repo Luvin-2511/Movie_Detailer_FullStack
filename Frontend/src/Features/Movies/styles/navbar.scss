@@ -5,7 +5,7 @@
   position: fixed;
   inset: 0;
   z-index: 999;
-  background: #060608;
+  background: var(--bg-color);
   display: none; // GSAP controls this
   flex-direction: column;
   padding: clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 4vw, 5rem);
@@ -31,7 +31,7 @@
     top: 6rem;
     bottom: 5rem;
     width: 1px;
-    background: rgba(255,255,255,0.06);
+    background: rgba(var(--text-rgb),0.06);
   }
 
   &__logo {
@@ -52,7 +52,7 @@
     width: 48px;
     height: 48px;
     background: none;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(var(--text-rgb),0.1);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -64,7 +64,7 @@
       position: absolute;
       width: 18px;
       height: 1px;
-      background: rgba(255,255,255,0.6);
+      background: rgba(var(--text-rgb),0.6);
       transition: background 0.2s;
 
       &:first-child { transform: rotate(45deg); }
@@ -91,13 +91,13 @@
 
   &__item {
     overflow: hidden;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(var(--text-rgb),0.05);
 
-    &:last-child { border-bottom: 1px solid rgba(255,255,255,0.05); }
+    &:last-child { border-bottom: 1px solid rgba(var(--text-rgb),0.05); }
 
     &--logout {
       margin-top: 1rem;
-      border-top: 1px solid rgba(255,255,255,0.04) !important;
+      border-top: 1px solid rgba(var(--text-rgb),0.04) !important;
     }
   }
 
@@ -113,7 +113,7 @@
     font-family: "Bebas Neue", sans-serif;
     font-size: clamp(2.5rem, 5.5vw, 6rem);
     letter-spacing: 0.02em;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(var(--text-rgb), 0.85);
     text-align: left;
     transition: color 0.25s ease;
     position: relative;
@@ -133,15 +133,15 @@
     & > * { position: relative; z-index: 1; }
 
     &:hover {
-      color: #060608;
+      color: var(--bg-color);
       &::before { transform: translateX(0); }
       .nav-overlay__link-num   { color: rgba(6,6,8,0.4); }
-      .nav-overlay__link-arrow { transform: translateX(8px); color: #060608; }
+      .nav-overlay__link-arrow { transform: translateX(8px); color: var(--bg-color); }
     }
 
     &--logout {
       font-size: clamp(1.2rem, 2.5vw, 2rem);
-      color: rgba(255,255,255,0.25);
+      color: rgba(var(--text-rgb),0.25);
 
       &:hover { color: #000000; }
     }
@@ -151,7 +151,7 @@
     font-family: "DM Sans", sans-serif;
     font-size: 0.65rem;
     letter-spacing: 0.2em;
-    color: rgba(255,255,255,0.2);
+    color: rgba(var(--text-rgb),0.2);
     width: 2rem;
     transition: color 0.25s;
   }
@@ -159,7 +159,7 @@
   &__link-arrow {
     margin-left: auto;
     font-size: 1.5rem;
-    color: rgba(255,255,255,0.15);
+    color: rgba(var(--text-rgb),0.15);
     transition: transform 0.3s ease, color 0.25s;
 
     @media (max-width: 600px) { display: none; }
@@ -175,7 +175,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.25);
+    color: rgba(var(--text-rgb),0.25);
     margin-bottom: 1rem;
   }
 
@@ -203,9 +203,9 @@
     font-size: 0.58rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.1);
+    color: rgba(var(--text-rgb),0.1);
     padding-top: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(var(--text-rgb),0.04);
   }
 }
 
@@ -304,7 +304,7 @@
     white-space: nowrap;
   }
 
-  &:hover &__label { color: #ffffff; }
+  &:hover &__label { color: var(--text-color); }
 
   &__lines {
     position: absolute;
@@ -321,14 +321,14 @@
   &__line {
     display: block;
     height: 1.5px;
-    background: #fff;
+    background: var(--text-color);
     transition: background 0.22s;
 
     &--long  { width: 2.5vw; min-width: 28px; }
     &--short { width: 1.3vw; min-width: 14px; }
   }
 
-  &:hover &__line { background: #060608; }
+  &:hover &__line { background: var(--bg-color); }
 
   // MENU block — tallest, rightmost
   &--menu {
@@ -366,6 +366,31 @@
       text-decoration: none;
       padding: 4rem;
       padding-block: 0;
+}
+
+// ── Theme Toggle ──────────────────────────────────────────────
+.nav-theme-toggle {
+  position: fixed;
+  bottom: clamp(1.5rem, 3vw, 2.5rem);
+  right: clamp(1.5rem, 3vw, 2.5rem);
+  z-index: 2000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    border-color: var(--accent-color);
+  }
 }
 
 // ── Animations ────────────────────────────────────────────────

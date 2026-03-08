@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import useMovieDetail from "../hooks/useMoviedetail";
 import useAuth from "../../Auth/hooks/useAuth";
 import useFavorites from "../../User/hooks/useFavorites";
+import useWatchlist from "../../User/hooks/useWatchlist";
 import { addToHistory } from "../../../store/slices/UserSlice";
 import MovieCard from "../components/Moviecard";
 import Navbar from "../components/Navbar";
@@ -51,6 +52,7 @@ const MovieDetail = () => {
   const dispatch = useDispatch();
   const { user } = useAuth();
   const { addFavorite, removeFavorite, isFavorited } = useFavorites();
+  const { addWatchlist, removeWatchlist, isWatchlisted } = useWatchlist();
 
   const { detail, trailer, cast, similar, loading, error } = useMovieDetail(id, type);
   const [modalOpen, setModalOpen] = useState(false);
@@ -85,6 +87,21 @@ const MovieDetail = () => {
       year: (detail.release_date || detail.first_air_date || "").slice(0, 4),
     };
     isFav ? removeFavorite(String(detail.id)) : addFavorite(payload);
+  };
+
+  const isWatch = detail ? isWatchlisted(detail.id) : false;
+
+  const toggleWatchlist = () => {
+    if (!detail) return;
+    const payload = {
+      movieId: String(detail.id),
+      title: detail.title || detail.name,
+      posterPath: detail.poster_path || "",
+      mediaType: type,
+      rating: detail.vote_average || 0,
+      year: (detail.release_date || detail.first_air_date || "").slice(0, 4),
+    };
+    isWatch ? removeWatchlist(String(detail.id)) : addWatchlist(payload);
   };
 
   // ── Loading skeleton ──
@@ -189,8 +206,20 @@ const MovieDetail = () => {
             <button
               className={`detail__hero-fav ${isFav ? "detail__hero-fav--active" : ""}`}
               onClick={toggleFav}
+              title="Favorite"
+              style={{ width: "45px", height: "45px", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}
             >
-              {isFav ? "♥ SAVED" : "♡ FAVORITE"}
+              <svg viewBox="0 0 24 24" width="20" height="20" fill={isFav ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+            <button
+              className={`detail__hero-fav ${isWatch ? "detail__hero-fav--active" : ""}`}
+              onClick={toggleWatchlist}
+              title="Watchlist"
+              style={{ padding: "0 1.2rem", fontWeight: "600" }}
+            >
+              {isWatch ? "✓ WATCHLIST" : "+ WATCHLIST"}
             </button>
           </div>
         </div>

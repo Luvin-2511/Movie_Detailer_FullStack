@@ -51,6 +51,57 @@ const getFavorites = async (req, res, next) => {
   }
 };
 
+// ── Watchlist ──────────────────────────────────────────────────
+
+const addWatchlist = async (req, res, next) => {
+  try {
+    const { movieId, title, posterPath, mediaType, rating, year } = req.body;
+    const user = await User.findById(req.user._id);
+
+    const alreadyWatch = user.watchlist.find(
+      (w) => w.movieId === String(movieId),
+    );
+    if (alreadyWatch)
+      return res.status(400).json({ message: "Already in watchlist." });
+
+    user.watchlist.unshift({
+      movieId: String(movieId),
+      title,
+      posterPath,
+      mediaType,
+      rating,
+      year,
+    });
+    await user.save();
+
+    res.status(200).json({ success: true, watchlist: user.watchlist });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const removeWatchlist = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    user.watchlist = user.watchlist.filter(
+      (w) => w.movieId !== req.params.movieId,
+    );
+    await user.save();
+    res.status(200).json({ success: true, watchlist: user.watchlist });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getWatchlist = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    res.status(200).json({ success: true, watchlist: user.watchlist });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // ── Watch History ─────────────────────────────────────────────
 
 const addToHistory = async (req, res, next) => {
@@ -108,6 +159,9 @@ module.exports = {
   addFavorite,
   removeFavorite,
   getFavorites,
+  addWatchlist,
+  removeWatchlist,
+  getWatchlist,
   addToHistory,
   getHistory,
   clearHistory,
