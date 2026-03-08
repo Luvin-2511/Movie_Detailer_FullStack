@@ -1,4 +1,4 @@
-import UserPageLayout from "../components/UserPageLayout";
+import UserPageLayout from "../components/userPageLayout";
 import useFavorites from "../hooks/useFavorites";
 import MovieCard from "../../Movies/components/MovieCard";
 import { SkeletonGrid } from "../../Movies/components/MovieSkeleton";
