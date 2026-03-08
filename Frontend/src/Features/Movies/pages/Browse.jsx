@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import useMovies from "../hooks/useMovies";
-import useInfiniteScroll from "../hooks/useInfiniteScroll";
-import MovieCard from "../components/MovieCard";
+import useInfiniteScroll from "../hooks/useinfinitescroll";
+import MovieCard from "../components/Moviecard";
 import { SkeletonGrid } from "../components/MovieSkeleton";
 import Navbar from "../components/Navbar";
 import "../styles/Browse.scss";

@@ -4,7 +4,7 @@ import {
   fetchFavorites, addFavorite, removeFavorite,
   selectFavorites, selectFavLoading, selectFavError, selectIsFavorited,
 } from "../../../store/slices/userSlice";
-import { selectIsAuthenticated } from "../../../store/slices/authSlice";
+import { selectIsAuthenticated } from "../../../store/slices/AuthSlice";
 
 const useFavorites = () => {
   const dispatch        = useDispatch();

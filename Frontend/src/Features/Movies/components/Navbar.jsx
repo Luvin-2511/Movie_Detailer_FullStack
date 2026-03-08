@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import useAuth from "../../Auth/hooks/useAuth";
-import "../styles/Navbar.scss";
+import "../styles/navbar.scss";
 
 const Navbar = () => {
   const overlayRef   = useRef(null);

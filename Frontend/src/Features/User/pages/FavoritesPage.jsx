@@ -1,9 +1,9 @@
 import UserPageLayout from "../components/userPageLayout";
 import useFavorites from "../hooks/useFavorites";
-import MovieCard from "../../Movies/components/MovieCard";
+import MovieCard from "../../Movies/components/Moviecard";
 import { SkeletonGrid } from "../../Movies/components/MovieSkeleton";
 import { Link } from "react-router-dom";
-import "../styles/UserPages.scss";
+import "../styles/userPages.scss";
 
 const FavoritesPage = () => {
   const { favorites, loading, error, removeFavorite } = useFavorites();

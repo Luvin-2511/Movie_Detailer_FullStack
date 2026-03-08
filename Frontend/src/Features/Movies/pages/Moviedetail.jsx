@@ -5,10 +5,10 @@ import useMovieDetail from "../hooks/useMovieDetail";
 import useAuth from "../../Auth/hooks/useAuth";
 import useFavorites from "../../User/hooks/useFavorites";
 import { addToHistory } from "../../../store/slices/userSlice";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "../components/Moviecard";
 import Navbar from "../components/Navbar";
-import "../styles/MovieDetail.scss";
-import "../styles/MovieSkeleton.scss";
+import "../styles/moviedetail.scss";
+import "../styles/movieskeleton.scss";
 
 const IMG_BASE_BACKDROP = "https://image.tmdb.org/t/p/original";
 const IMG_BASE_POSTER   = "https://image.tmdb.org/t/p/w500";

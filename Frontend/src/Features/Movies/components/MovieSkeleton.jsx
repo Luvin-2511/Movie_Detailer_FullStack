@@ -1,4 +1,4 @@
-import "../styles/MovieSkeleton.scss";
+import "../styles/movieskeleton.scss";
 
 const MovieSkeleton = () => (
   <div className="movie-skeleton">

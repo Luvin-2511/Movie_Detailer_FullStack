@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../styles/AdminModals.scss";
+import "../styles/Adminmodals.scss";
 
 const EMPTY = {
   title: "", overview: "", releaseDate: "",

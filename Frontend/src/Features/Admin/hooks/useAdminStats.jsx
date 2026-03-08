@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStats, selectStats } from "../../../store/slices/adminSlice";
+import { fetchStats, selectStats } from "../../../store/slices/AdminSlice.js";
 
 const useAdminStats = () => {
   const dispatch = useDispatch();

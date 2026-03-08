@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchHistory, addToHistory, clearHistory,
   selectHistory, selectHistLoading, selectHistError,
-} from "../../../store/slices/userSlice";
-import { selectIsAuthenticated } from "../../../store/slices/authSlice";
+} from "../../../store/slices/UserSlice";
+import { selectIsAuthenticated } from "../../../store/slices/AuthSlice";
 
 const useHistory = () => {
   const dispatch        = useDispatch();

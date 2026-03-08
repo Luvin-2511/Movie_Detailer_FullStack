@@ -1,5 +1,5 @@
 import Navbar from "../../Movies/components/Navbar";
-import "../styles/UserLayout.scss";
+import "../styles/userLayout.scss";
 
 const UserPageLayout = ({ children }) => {
   return (

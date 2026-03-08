@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import UserPageLayout from "../components/userPageLayout";
 import useHistory from "../hooks/useHistory";
-import "../styles/UserPages.scss";
+import "../styles/userPages.scss";
 
 const IMG_BASE = "https://image.tmdb.org/t/p/w92";
 const PLACEHOLDER = "https://via.placeholder.com/46x69/111/333?text=?";

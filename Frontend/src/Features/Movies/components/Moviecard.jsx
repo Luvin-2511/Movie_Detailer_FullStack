@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../Auth/hooks/useAuth";
-import "../styles/MovieCard.scss";
+import "../styles/moviecard.scss";
 
 const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 const PLACEHOLDER = "https://via.placeholder.com/500x750/0a0a0a/333?text=NO+POSTER";
