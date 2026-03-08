@@ -18,13 +18,18 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   process.env.FRONTEND_URL, // set this to your Vercel URL in Render env vars
-].filter(Boolean);
+]
+  .filter(Boolean)
+  .map(url => url.endsWith('/') ? url.slice(0, -1) : url);
 
 app.use(
   cors({
     origin: (origin, callback) => {
+      // Clean incoming origin just in case
+      const cleanOrigin = origin && origin.endsWith('/') ? origin.slice(0, -1) : origin;
+
       // Allow requests with no origin (e.g. mobile apps, curl, Postman)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!cleanOrigin || allowedOrigins.includes(cleanOrigin)) {
         callback(null, true);
       } else {
         callback(new Error(`CORS blocked for origin: ${origin}`));
