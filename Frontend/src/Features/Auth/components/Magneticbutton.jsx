@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import "../styles/Magneticbutton.scss";
+import "../styles/magneticbutton.scss";
 
 const MagneticButton = ({ children, onClick, type = "button", disabled = false, className = "", loading = false }) => {
   const btnRef = useRef(null);

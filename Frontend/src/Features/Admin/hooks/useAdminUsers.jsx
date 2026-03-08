@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllUsers, banUser, unbanUser, deleteUser,
   selectAdminUsers, selectUsersLoading,
-} from "../../../store/slices/adminSlice";
+} from "../../../store/slices/AdminSlice";
 
 const useAdminUsers = () => {
   const dispatch = useDispatch();

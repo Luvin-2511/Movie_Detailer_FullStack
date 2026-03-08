@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchFavorites, addFavorite, removeFavorite,
   selectFavorites, selectFavLoading, selectFavError, selectIsFavorited,
-} from "../../../store/slices/userSlice";
+} from "../../../store/slices/UserSlice";
 import { selectIsAuthenticated } from "../../../store/slices/AuthSlice";
 
 const useFavorites = () => {

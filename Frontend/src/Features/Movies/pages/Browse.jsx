@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import useMovies from "../hooks/useMovies";
-import useInfiniteScroll from "../hooks/useinfinitescroll";
+import useInfiniteScroll from "../hooks/Useinfinitescroll";
 import MovieCard from "../components/Moviecard";
 import { SkeletonGrid } from "../components/MovieSkeleton";
 import Navbar from "../components/Navbar";
-import "../styles/Browse.scss";
+import "../styles/browse.scss";
 
 const CATEGORIES = [
   { key: "trending", label: "Trending"  },

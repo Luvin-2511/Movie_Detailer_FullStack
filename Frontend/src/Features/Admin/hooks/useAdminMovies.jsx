@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllMoviesAdmin, addMovie, updateMovie, deleteMovie,
   selectAdminMovies, selectMoviesLoading,
-} from "../../../store/slices/adminSlice";
+} from "../../../store/slices/AdminSlice";
 
 const useAdminMovies = () => {
   const dispatch = useDispatch();

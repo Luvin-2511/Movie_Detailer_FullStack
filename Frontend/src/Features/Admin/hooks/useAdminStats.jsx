@@ -4,7 +4,7 @@ import { fetchStats, selectStats } from "../../../store/slices/AdminSlice.js";
 
 const useAdminStats = () => {
   const dispatch = useDispatch();
-  const stats    = useSelector(selectStats);
+  const stats = useSelector(selectStats);
 
   useEffect(() => { if (!stats) dispatch(fetchStats()); }, []);
 

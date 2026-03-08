@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import useMovieDetail from "../hooks/useMovieDetail";
+import useMovieDetail from "../hooks/useMoviedetail";
 import useAuth from "../../Auth/hooks/useAuth";
 import useFavorites from "../../User/hooks/useFavorites";
-import { addToHistory } from "../../../store/slices/userSlice";
+import { addToHistory } from "../../../store/slices/UserSlice";
 import MovieCard from "../components/Moviecard";
 import Navbar from "../components/Navbar";
 import "../styles/moviedetail.scss";
 import "../styles/movieskeleton.scss";
 
 const IMG_BASE_BACKDROP = "https://image.tmdb.org/t/p/original";
-const IMG_BASE_POSTER   = "https://image.tmdb.org/t/p/w500";
-const IMG_BASE_FACE     = "https://image.tmdb.org/t/p/w185";
-const PLACEHOLDER_FACE  = "https://via.placeholder.com/185x278/111/333?text=?";
+const IMG_BASE_POSTER = "https://image.tmdb.org/t/p/w500";
+const IMG_BASE_FACE = "https://image.tmdb.org/t/p/w185";
+const PLACEHOLDER_FACE = "https://via.placeholder.com/185x278/111/333?text=?";
 
 // ── Trailer Modal ─────────────────────────────────────────────
 const TrailerModal = ({ videoKey, onClose }) => {
@@ -62,27 +62,27 @@ const MovieDetail = () => {
   useEffect(() => {
     if (!detail || !user) return;
     dispatch(addToHistory({
-      movieId:    String(detail.id),
-      title:      detail.title || detail.name,
+      movieId: String(detail.id),
+      title: detail.title || detail.name,
       posterPath: detail.poster_path || "",
-      mediaType:  type,
-      rating:     detail.vote_average || 0,
-      year:       (detail.release_date || detail.first_air_date || "").slice(0, 4),
-      watchedAt:  new Date().toISOString(),
+      mediaType: type,
+      rating: detail.vote_average || 0,
+      year: (detail.release_date || detail.first_air_date || "").slice(0, 4),
+      watchedAt: new Date().toISOString(),
     }));
   }, [detail?.id]);
 
-  const isFav    = detail ? isFavorited(detail.id) : false;
+  const isFav = detail ? isFavorited(detail.id) : false;
 
   const toggleFav = () => {
     if (!detail) return;
     const payload = {
-      movieId:    String(detail.id),
-      title:      detail.title || detail.name,
-      posterPath: detail.poster_path  || "",
-      mediaType:  type,
-      rating:     detail.vote_average || 0,
-      year:       (detail.release_date || detail.first_air_date || "").slice(0, 4),
+      movieId: String(detail.id),
+      title: detail.title || detail.name,
+      posterPath: detail.poster_path || "",
+      mediaType: type,
+      rating: detail.vote_average || 0,
+      year: (detail.release_date || detail.first_air_date || "").slice(0, 4),
     };
     isFav ? removeFavorite(String(detail.id)) : addFavorite(payload);
   };
@@ -117,15 +117,15 @@ const MovieDetail = () => {
   }
 
   // ── Data helpers ──
-  const title       = detail.title || detail.name || "Untitled";
-  const year        = (detail.release_date || detail.first_air_date || "").slice(0, 4);
-  const runtime     = detail.runtime ? `${Math.floor(detail.runtime / 60)}h ${detail.runtime % 60}m` : null;
-  const rating      = detail.vote_average?.toFixed(1);
-  const votes       = detail.vote_count?.toLocaleString();
-  const overview    = detail.overview || "Description not available.";
-  const genres      = detail.genres || [];
-  const backdrop    = detail.backdrop_path ? `${IMG_BASE_BACKDROP}${detail.backdrop_path}` : null;
-  const thumbUrl    = trailer ? `https://img.youtube.com/vi/${trailer.key}/maxresdefault.jpg` : null;
+  const title = detail.title || detail.name || "Untitled";
+  const year = (detail.release_date || detail.first_air_date || "").slice(0, 4);
+  const runtime = detail.runtime ? `${Math.floor(detail.runtime / 60)}h ${detail.runtime % 60}m` : null;
+  const rating = detail.vote_average?.toFixed(1);
+  const votes = detail.vote_count?.toLocaleString();
+  const overview = detail.overview || "Description not available.";
+  const genres = detail.genres || [];
+  const backdrop = detail.backdrop_path ? `${IMG_BASE_BACKDROP}${detail.backdrop_path}` : null;
+  const thumbUrl = trailer ? `https://img.youtube.com/vi/${trailer.key}/maxresdefault.jpg` : null;
 
   return (
     <div className="detail">
@@ -176,7 +176,7 @@ const MovieDetail = () => {
             {trailer ? (
               <button className="detail__hero-play" onClick={() => setModalOpen(true)}>
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M8 5v14l11-7z"/>
+                  <path d="M8 5v14l11-7z" />
                 </svg>
                 WATCH TRAILER
               </button>
@@ -214,7 +214,7 @@ const MovieDetail = () => {
               <div className="detail__trailer-thumb-play">
                 <div className="play-ring">
                   <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z"/>
+                    <path d="M8 5v14l11-7z" />
                   </svg>
                 </div>
                 <span className="play-label">Play Trailer</span>
